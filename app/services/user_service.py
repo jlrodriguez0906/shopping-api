@@ -1,13 +1,7 @@
-from passlib.context import CryptContext
-
 from app.models.user import User
 from app.repositories.user_repository import UserRepository
 from app.schemas.user import UserCreate
-
-pwd_context = CryptContext(
-    schemes=["bcrypt"],
-    deprecated="auto"
-)
+from app.core.security import hash_password
 
 class UserService:
 
@@ -33,7 +27,7 @@ class UserService:
 
             email=data.email,
 
-            password=pwd_context.hash(data.password)
+            password=hash_password(data.password)
 
         )
 
